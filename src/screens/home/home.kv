@@ -1,51 +1,34 @@
 <HomeScreen>:
     canvas:
         Color:
-            rgba: 14,51,244,0.1
+            rgba: 0.176, 0.243, 0.314, 1.0
         Rectangle:
             pos: self.pos
             size: self.size
 
-    Label:
-        text: "Netpwn"
-        font_name: "Fonts/Orbitron-Bold.ttf"
-        font_size: 100
-        size_hint: .6, .1
-        pos_hint: {'x':.2, 'y':.7}
-        color: 0,0,255,0.2
+    ActionBar:
+        pos_hint: {'top':1}
+        background_color: 0.925, 0.941, 0.937, 1.0
+        spacing: '4dp'
+        ActionView:
+            use_separator: False
+            ActionPrevious:
+                with_previous: False
+                app_icon: "/home/dylan/Desktop/netpwn/Images/glyphicons_free/glyphicons/png/glyphicons-82-refresh.png"
+                Button:
+                    text: "Netpwn"
+                    font_name: "/home/dylan/Desktop/netpwn/Fonts/Arvo-Italic.ttf"
+                    font_size: 40
+                    shorten: True
+                    halign: 'center'
+                    valign: 'middle'
+                    #padding: 100
 
-    Button:
-        size_hint: .3, .2
-        text: "Scan For Targets"
-        font_size: 30
-        pos_hint: {'x': .35, 'y': .05}
-        on_press: app.scanTargets()
-        color: 100,100,100,0.5
-        background_color: 0,0,255,0.1
-
-    Button:
-        size_hint: .3, .2
-        text: "Attack Network"
-        font_size: 30
-        pos_hint: {'x': .35, 'y': .30}
-        on_press: app.attackNetwork()
-        color: 100,100,100,0.5
-        background_color: 0,0,255,0.1
-
-    Button:
-        size_hint: .3, .2
-        text: "Stop Network"
-        font_size: 30
-        pos_hint: {'x': .03, 'y': .15}
-        on_press: app.stopNetwork()
-        color: 100,100,100,0.5
-        background_color: 0,0,255,0.1
-
-    Button:
-        size_hint: .3, .2
-        text: "Your Info"
-        font_size: 30
-        pos_hint: {'x': .67, 'y': .15}
-        on_press: app.yourInfo()
-        color: 100,100,100,0.5
-        background_color: 0,0,255,0.1
+    ActionBar:
+        pos_hint: {'bottom':1}
+        background_color: 0.925, 0.941, 0.937, 1.0
+        ActionView:
+            use_separator: True
+            ActionPrevious:
+                with_previous: False
+                app_icon: "/home/dylan/Desktop/netpwn/Images/None.png"

@@ -1,0 +1,11 @@
+#! /bin/bash
+
+sudo apt-get install libnet1-dev > /dev/null
+echo "Installed: libnet1-dev"
+sudo apt-get install python-dev
+echo "Installed: python-dev"
+sudo cp /usr/lib/i386-linux-gnu/libnet.a /usr/lib/libnet.a #sorts out error for pylibnet libnet.a not being found
+pip install pylibnet
+echo "Installed: pylibnet"
+pip install impacket
+echo "Installed: impacket"

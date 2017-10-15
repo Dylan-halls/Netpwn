@@ -57,6 +57,7 @@ class Netpwn(App):
 
     def build(self):
         self.title = 'Netpwn'
+        self.icon = os.path.abspath("/Images/bolt.png")
         return self.sm
 
 if __name__ == "__main__":

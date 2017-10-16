@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 
 #system imports
 import socket
@@ -136,12 +136,18 @@ class Sniffer(object):
         self.packet['ARP_SPA']     = '.'.join([str(i) for i in packet.get_ar_spa()])
         self.packet['ARP_PAYLOAD'] = packet.get_data_as_string()
 
+    def _decode_ether(self, packet):
+        self.packet['ETH_DHOST'] = ':'.join([hex(i)[2:] for i in packet.get_ether_dhost()])
+        self.packet['ETH_SHOST'] = ':'.join([hex(i)[2:] for i in packet.get_ether_shost()])
+        self.packet['ETH_TYPE']  = packet.get_ether_type()
+
     def _packet_handler(self, packet):
         """
         decode ethernet packet and pass packets child to decoding function
         """
         decoder = EthDecoder()
         dpkt = decoder.decode(packet)
+        self._decode_ether(dpkt)
         if dpkt.get_ether_type() == ETHERTYPE_IP:
             self._decode_ip(dpkt.child())
         if dpkt.get_ether_type() == ETHERTYPE_ARP:

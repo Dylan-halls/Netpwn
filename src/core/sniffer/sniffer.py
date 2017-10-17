@@ -37,7 +37,11 @@ class Sniffer(object):
         if os.getuid() == 0:
             self.sock = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
             self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 2**30)
-            self.sock.bind((iface, 0x0003))
+            try:
+                self.sock.bind((iface, 0x0003))
+            except socket.error:
+                self.log.critical("No such device: %s" % iface)
+                exit(-1)
         else:
             self.log.critical("Needs to be root")
             exit(-1)

@@ -47,7 +47,7 @@ class TCP_Hijack(object):
     def reset(self, packet):
         self.wire.write()
         bytes_written = self.wire.stats()['bytes_written']
-        print("{}: resetting {} <------> {}".format(bytes_written, packet['IP_SRC'], packet['IP_DST']))
+        print("({}, {}, {})".format(bytes_written, packet['IP_SRC'], packet['IP_DST']))
         del self.wire
 
     def pkt_handle(self, packet):
@@ -64,5 +64,5 @@ class TCP_Hijack(object):
 
 if __name__ == '__main__':
     tcp = TCP_Hijack("wlp3s0")
-    print("listening on [{}] with id [{}]".format(tcp.iface, tcp.unique_id))
+    print("tcpHijack on {} with id {}".format(tcp.iface, tcp.unique_id))
     tcp.kill()
